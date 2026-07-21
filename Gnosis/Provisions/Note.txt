@@ -1,0 +1,4 @@
+(Vendors)
+
+I use this folder if I have trouble linking a library via CMake
+
