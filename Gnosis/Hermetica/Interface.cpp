@@ -65,13 +65,13 @@ int sampler[2] = {0, 1};
 glUniform1iv(loc, 2, sampler);
 
 
-Quad BestQuad(0.5f, -0.5f, 0.3f, 1.0f, 1.0f);
+Quad BestQuad(0.5f, -0.5f, 0.3f, 1.0f, 1.0f, 0.0f);
 
 	glViewport(0, 0, Logical_W, Logical_H);	
 
 while(Running){
 
-Quad testQuad(x, -0.5f, 0.3f, 0.5f, 1.0f, 0.0f);
+Quad testQuad(x, -0.5f, 0.3f, 0.5f, 1.0f, 0.0f, 1.5f);
 
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 

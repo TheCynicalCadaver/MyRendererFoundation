@@ -36,51 +36,68 @@ void Shader::Compile(const char* VertShader, const char* FragShader){
 }
 
 
-Quad::Quad(GLfloat x, GLfloat y, GLfloat z, GLfloat size, GLfloat TexID){
+Quad::Quad(GLfloat x, GLfloat y, GLfloat z, GLfloat size, GLfloat TexID, GLfloat MixRatio){
 
 Verts[0].Position = {x, y, z};
 Verts[0].Color = {1.0f, 1.0f, 1.0f, 1.0f};
 Verts[0].TextureCords = {0.0f, 0.0f };
 Verts[0].TextureID = TexID;
+Verts[0].mixRatio = MixRatio;
+
 
 Verts[1].Position = {x + size, y, z};
 Verts[1].Color = {0.0f, 0.0f, 0.4f , 1.0f };
 Verts[1].TextureCords = {1.0f, 0.0f };
 Verts[1].TextureID = TexID;
+Verts[1].mixRatio = MixRatio;
+
 
 Verts[2].Position = {x + size, y + size, z};
 Verts[2].Color = {0.0f, 0.4f, 0.0f , 1.0f };
 Verts[2].TextureCords = { 1.0f, 1.0f};
 Verts[2].TextureID = TexID;
+Verts[2].mixRatio = MixRatio;
+
 
 Verts[3].Position = {x, y + size, z};
 Verts[3].Color = {0.4f, 0.0f, 0.0f, 1.0f};
 Verts[3].TextureCords = { 0.0f, 1.0f};
 Verts[3].TextureID = TexID;
+Verts[3].mixRatio = MixRatio;
+
 }
 
-Quad::Quad(GLfloat x, GLfloat y, GLfloat z, GLfloat W, GLfloat H, GLfloat TexID){
+Quad::Quad(GLfloat x, GLfloat y, GLfloat z, GLfloat W, GLfloat H, GLfloat TexID, GLfloat MixRatio){
 
 Verts[0].Position = {x, y, z};
 Verts[0].Color = {1.0f, 1.0f, 1.0f, 1.0f};
 Verts[0].TextureCords = {0.0f, 0.0f };
 Verts[0].TextureID = TexID;
+Verts[0].mixRatio = MixRatio;
+
 
 Verts[1].Position = {x + W, y, z};
 Verts[1].Color = {0.0f, 0.0f, 0.4f , 1.0f };
 Verts[1].TextureCords = {1.0f, 0.0f };
 Verts[1].TextureID = TexID;
+Verts[1].mixRatio = MixRatio;
+
 
 Verts[2].Position = {x + W, y + H, z};
 Verts[2].Color = {0.0f, 0.4f, 0.0f , 1.0f };
 Verts[2].TextureCords = { 1.0f, 1.0f};
 Verts[2].TextureID = TexID;
+Verts[2].mixRatio = MixRatio;
+
 
 Verts[3].Position = {x, y + H, z};
 Verts[3].Color = {0.4f, 0.0f, 0.0f, 1.0f};
 Verts[3].TextureCords = { 0.0f, 1.0f};
 Verts[3].TextureID = TexID;
+Verts[3].mixRatio = MixRatio;
+
 }
+
 Quad::Quad(glm::vec3 XYZ, glm::vec3 Col, GLfloat size, GLfloat TexID){
 
 }
@@ -102,13 +119,14 @@ glBindVertexArray(VAO);
 glBindBuffer(GL_ARRAY_BUFFER, VBO);
 glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * MaxVerts, nullptr, GL_DYNAMIC_DRAW);
 
-glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 10 * sizeof(GLfloat), (void*)0);
+glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 11 * sizeof(GLfloat), (void*)0);
 glEnableVertexAttribArray(0);
 
-glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 10 * sizeof(GLfloat), (void*)(4 * sizeof(GLfloat)));
+glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 11 * sizeof(GLfloat), (void*)(4 * sizeof(GLfloat)));
 glEnableVertexAttribArray(1);
 
-glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 10 * sizeof(GLfloat), (void*)(7 * sizeof(GLfloat))); //TexCords & ID
+glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, 11 * sizeof(GLfloat), (void*)(7 * sizeof(GLfloat))); //TexCords & ID
+												     //
 glEnableVertexAttribArray(2);
 
 
@@ -149,6 +167,8 @@ void GL_Renderer::Push_Quad(Quad& Q){
 	Vertices.push_back(Q.Verts[i].TextureCords.y);
 
 	Vertices.push_back(Q.Verts[i].TextureID);
+
+	Vertices.push_back(Q.Verts[i].mixRatio);
 
 					      }
 	IndicesCount += 6;

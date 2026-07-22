@@ -27,6 +27,7 @@ glm::vec3 Position;
 glm::vec4 Color;
 glm::vec2 TextureCords;
 GLfloat TextureID;
+GLfloat mixRatio;
 	     };
 
 
@@ -34,10 +35,10 @@ struct Quad{
 
 std::array<Vertex, 4> Verts;
 
-Quad(GLfloat x, GLfloat y, GLfloat z, GLfloat size, GLfloat TexID);
+Quad(GLfloat x, GLfloat y, GLfloat z, GLfloat size, GLfloat TexID, GLfloat MixRatio);
 Quad(glm::vec3 XYZ, glm::vec3 Col, GLfloat size, GLfloat TexID);
 
-Quad(GLfloat x, GLfloat y, GLfloat z, GLfloat W, GLfloat H, GLfloat TexID);
+Quad(GLfloat x, GLfloat y, GLfloat z, GLfloat W, GLfloat H, GLfloat TexID, GLfloat MixRatio);
 	   };	
 
 
