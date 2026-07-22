@@ -1,5 +1,7 @@
 #include "Interface.hpp"
 
+float x = -0.8f;
+
 INTERFACE::INTERFACE(int Width, int Height) :
 Window_W(Width), Window_H(Height),Logical_W(Width), Logical_H(Height){
 
@@ -42,13 +44,10 @@ SDL_ShowWindow(Window);
 
 Running = true;
 
-
-const char Exit_Key = 'z';
-char Last_Key = ' ';
+SDL_SetRenderVSync(Renderer, 1);
 
 
-
-
+keyboard_handle = SDL_GetKeyboardState(nullptr);
 
 
 MagicBag.MakeShader("Crux/Perception/Vert1.shader",
@@ -73,19 +72,22 @@ int sampler[2] = {0, 1};
 glUniform1iv(loc, 2, sampler);
 
 
-Quad testQuad(-0.8f, -0.5f, 0.3f, 1.0f, 0.0f);
 Quad BestQuad(0.5f, -0.5f, 0.3f, 1.0f, 1.0f);
 
 	glViewport(0, 0, Logical_W, Logical_H);	
 
 while(Running){
 
+Quad testQuad(x, -0.5f, 0.3f, 1.0f, 0.0f);
 
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
+
+
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	GLR.Push_Quad(testQuad);
-	GLR.Push_Quad(BestQuad);
+//	GLR.Push_Quad(BestQuad);
 
 //	MagicBag.FindShader("Shader1").setInt("uniTexture", 0);
 
@@ -109,9 +111,11 @@ SDL_Event event{0};
 while(SDL_PollEvent(&event)){
 
 	switch(event.type){
+
 	
 	case SDL_EVENT_QUIT:{
 	EndProg();
+	break;
 			    }
 
 	case SDL_EVENT_WINDOW_RESIZED:{
@@ -122,8 +126,20 @@ while(SDL_PollEvent(&event)){
 	glViewport(0, 0, Logical_W, Logical_H);	
 
 	break;
-				      }		    
-  }//event.type	
+				      }	
+
+	case SDL_EVENT_KEY_DOWN:{
+	
+	if(keyboard_handle[SDL_SCANCODE_A]){
+	x -= 0.1f;
+					   }
+	if(keyboard_handle[SDL_SCANCODE_D]){
+	x += 0.1f;
+					   }
+	break;
+				}
+
+			   }//event.type	
 
  }//whilePoll
   

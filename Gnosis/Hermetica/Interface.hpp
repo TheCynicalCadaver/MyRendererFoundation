@@ -17,6 +17,8 @@ SDL_WindowFlags win_flags	 = 	 SDL_WINDOW_OPENGL |
 			    
 bool Running = false;
 
+const bool *keyboard_handle = nullptr;
+
 int Logical_W, Logical_H;
 int Window_W, Window_H;
 
